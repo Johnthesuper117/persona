@@ -129,7 +129,7 @@
 </head>
 <body>
   <div class="container">
-    <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
+    <button type="button" class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark Mode" aria-label="Toggle dark mode">🌙</button>
 
     <div class="input-group" style="margin-top: 1rem;">
       <label for="urlInput"><strong>Website URL: *</strong></label>
@@ -190,7 +190,7 @@
     }
 
     // Load saved settings when the page opens
-    window.onload = function() {
+    window.addEventListener("load", function() {
       if (localStorage.getItem("embedder_theme") === "dark") {
         document.body.classList.add("dark-mode");
         document.getElementById("themeToggleBtn").innerText = "☀️";
@@ -208,7 +208,7 @@
       if (localStorage.getItem("embedder_popups") === "true") {
         document.getElementById("allowPopupsCheckbox").checked = true;
       }
-    };
+    });
 
     function saveSettings() {
       localStorage.setItem("embedder_url", document.getElementById("urlInput").value.trim());
@@ -257,7 +257,7 @@
 
     var inputs = document.querySelectorAll('input[type="text"]');
     inputs.forEach(function(input) {
-      input.addEventListener("keypress", function(event) {
+      input.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
           event.preventDefault();
           openWebsite();
@@ -335,7 +335,7 @@
           iframe.setAttribute("allowfullscreen", "true");
 
           var sandboxRules = "allow-scripts allow-same-origin allow-forms allow-presentation";
-          if (allowPopups) { sandboxRules += " allow-popups allow-popups-to-escape-sandbox"; }
+          if (allowPopups) { sandboxRules += " allow-popups"; }
           iframe.setAttribute("sandbox", sandboxRules);
 
           iframe.onload = function() {
